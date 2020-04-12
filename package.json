@@ -79,6 +79,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
+    "lit-html": "^1.2.1",
     "menubar": "^8.0.1"
   }
 }
