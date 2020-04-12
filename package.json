@@ -78,6 +78,7 @@
     "tailwindcss": "^1.2.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "menubar": "^8.0.1"
   }
 }
