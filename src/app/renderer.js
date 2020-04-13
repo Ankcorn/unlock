@@ -1,5 +1,6 @@
 import './index.css';
-import { render } from 'lit-html'
+import { render } from 'lit-html';
+import { ipcRenderer } from 'electron';
 
 // import Jwt from './jwt';
 import home from './home'
@@ -19,7 +20,7 @@ const state = {
 // new Jwt();
 function build(state) {
  
-
+  ipcRenderer.send('change', 'hi')
   switch(state.page) {
     case 'home':
       return render(home({ onFooterClick, data: state.homeData }), document.body);
@@ -30,4 +31,7 @@ function build(state) {
   }
 }
 
+ipcRenderer.on('update', (event, arg) => {
+  console.log(arg) // prints "pong"
+})
 build(state);

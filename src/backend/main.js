@@ -1,7 +1,7 @@
-const { app, BrowserWindow, Tray } = require('electron');
+const { app, BrowserWindow, Tray, ipcMain } = require('electron');
 const path = require('path');
-
 app.dock.hide();
+
 let window, tray;
 
 const createWindow = () => {
@@ -13,6 +13,7 @@ const createWindow = () => {
       fullscreenable: false,
       resizable: false,
       transparent: true,
+      webPreferences: { nodeIntegration: true }
   });
   window.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   // Hide the window when it loses focus
@@ -58,3 +59,7 @@ app.on('ready', () => {
   createWindow();
 });
 
+ipcMain.on('change', (event, arg) => {
+  console.log(arg) // prints "ping"
+  event.reply('update', 'pong')
+})

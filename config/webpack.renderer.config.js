@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const rules = require('./webpack.rules');
 
 rules.push({
