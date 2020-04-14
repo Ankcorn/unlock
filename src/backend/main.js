@@ -6,33 +6,33 @@ let window, tray;
 
 const createWindow = () => {
   window = new BrowserWindow({
-      width: 320,
-      height: 450,
-      show: false,
-      frame: false,
-      fullscreenable: false,
-      resizable: false,
-      transparent: true,
-      webPreferences: { nodeIntegration: true }
+    width: 320,
+    height: 450,
+    show: false,
+    frame: false,
+    fullscreenable: false,
+    resizable: false,
+    transparent: true,
+    webPreferences: { nodeIntegration: true }
   });
   window.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   // Hide the window when it loses focus
   window.on('blur', () => {
-      if (!window.webContents.isDevToolsOpened()) {
-          window.hide();
-      }
+    if (!window.webContents.isDevToolsOpened()) {
+      window.hide();
+    }
   });
 }
 
 const getWindowPosition = () => {
   const windowBounds = window.getBounds();
   const trayBounds = tray.getBounds();
-  
+
   // Center window horizontally below the tray icon
   const x = Math.round(trayBounds.x + (trayBounds.width / 2) - (windowBounds.width / 2))
   // Position window 4 pixels vertically below the tray icon
   const y = Math.round(trayBounds.y + trayBounds.height + 4)
-  return {x: x, y: y}
+  return { x: x, y: y }
 }
 
 const showWindow = () => {
@@ -49,7 +49,7 @@ const createTray = () => {
   tray = new Tray(path.join(__dirname, 'Group@2x.png'));
   tray.on('click', function (event) {
     toggleWindow();
-})
+  })
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -59,7 +59,19 @@ app.on('ready', () => {
   createWindow();
 });
 
+const state = {
+  page: 'home',
+  homeData: ['Google @ NearST', 'Shop-Owners', 'Testing'],
+  jwtData: {}
+}
 ipcMain.on('change', (event, arg) => {
   console.log(arg) // prints "ping"
-  event.reply('update', 'pong')
+  if(arg.action === 'jwt-click') {
+    return event.reply('update', {...state, page: 'jwt'})
+  }
+
+  if(arg.action ==='home-click') {
+    return event.reply('update', { ...state, page: 'home'})
+  }
+  return event.reply('update', state)
 })
