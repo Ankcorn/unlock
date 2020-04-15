@@ -1,6 +1,6 @@
 import { html } from 'lit-html'
 
-export default ({ back }) => html`
+export default ({ back, token, copyToken }) => html`
   <div class="fixed h-48 bg-gray-800" />
   <div class="flex flex-col h-screen justify-between">
   <navigation class="px-6 pt-2 flex flex-row items-center w-screen">
@@ -13,9 +13,10 @@ export default ({ back }) => html`
       Google @ NearSt
     </h1>
   </navigation>
-  <main class="bg-gray-100 h-full mx-6 my-2 rounded-lg p-4">
-  </main>
+  <p class="bg-gray-100 break-all mx-6 my-2 overflow-y-scroll rounded-lg p-4">
+    ${token}
+  </p>
   <footer class="px-6 py-3">
-    <button class="bg-blue-500 w-full p-2 rounded-md text-white">Copy JWT</button>
+    <button @click="${() => copyToken(token)}" class="bg-blue-500 w-full p-2 rounded-md text-white">Copy JWT</button>
   </footer>
 `

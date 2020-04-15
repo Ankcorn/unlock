@@ -46,6 +46,7 @@
         [
           "@electron-forge/plugin-webpack",
           {
+            "loggerPort": 9001,
             "mainConfig": "./config/webpack.main.config.js",
             "renderer": {
               "config": "./config/webpack.renderer.config.js",
@@ -78,9 +79,12 @@
     "tailwindcss": "^1.2.0"
   },
   "dependencies": {
+    "aws-sdk": "^2.656.0",
+    "clipboardy": "^2.3.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^5.1.1",
     "lit-html": "^1.2.1",
-    "menubar": "^8.0.1"
+    "menubar": "^8.0.1",
+    "node-notifier": "^7.0.0"
   }
 }
