@@ -41,8 +41,10 @@ async function updateStore(action, window){
 			// 	page: 'home',
 			// 	homeData: ['Google @ NearST', 'Shop-Owners', 'Testing']
 			// }
-		case 'CONFIG_UPDATE':
-		case 'CONFIG_OPEN':
+		case 'CREATE_CLICK':
+			return {
+				page: 'create',
+			}
 	}
 }
 

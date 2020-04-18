@@ -3,19 +3,13 @@ import { render } from 'lit-html';
 import { ipcRenderer } from 'electron';
 
 import jwt from './jwt';
-import home from './home'
-// console.log('👋 This message is being logged by "renderer.js", included via webpack');
+import home from './home';
+import create from './create';
+
 
 function onFooterClick() {
-  console.log('hi')
-  data.push('test')
+  ipcRenderer.send('change', { type: 'CREATE_CLICK' })
 }
-
-// const state = {
-//   page: 'home',
-//   homeData: ['Google @ NearST', 'Shop-Owners', 'Testing'],
-//   jwtData: {}
-// }
 
 function onJWTClick(name) {
   ipcRenderer.send('change', { type: 'JWT_CLICK', payload: name })
@@ -31,6 +25,7 @@ function copyToken(payload)  {
     body: 'Copied the ID Token from Google @ NearSt'
   })
 }
+
 function build(state) {
 
   switch (state.page) {
@@ -38,6 +33,8 @@ function build(state) {
       return render(home({ onFooterClick, data: state.homeData, onJWTClick }), document.body);
     case 'jwt':
       return render(jwt({ back: backHome, user: state.activeUser, token: state.activeToken.AuthenticationResult.IdToken, copyToken }), document.body);
+    case 'create':
+      return render(create({back: backHome}), document.body)
     default:
       return render(home({ onFooterClick, data: state.homeData, onJWTClick }), document.body);
   }

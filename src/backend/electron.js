@@ -60,8 +60,7 @@ function buildTrayApplication(callback) {
 		createTray();
 		createWindow();
 		callback({window, tray, app})
-	  });
-	
+  });
 }
 
 module.exports = buildTrayApplication
