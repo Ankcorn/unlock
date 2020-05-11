@@ -15,12 +15,12 @@ const parseJwt = (token) => {
 	}
 };
 
-async function updateStore(action, window){
+async function updateStore(action, electron){
 	switch(action.type) {
 		case 'INIT':
 			return {
 				page: 'home',
-				homeData: ['Google @ NearST', 'Shop-Owners', 'Testing']
+				homeData: []
 			}
 		case 'JWT_CLICK':
 			const user = await getUserTokens()
@@ -35,7 +35,7 @@ async function updateStore(action, window){
 				homeData: ['Google @ NearST', 'Shop-Owners', 'Testing']
 			}
 		case 'COPY_TOKEN':
-			window.hide()
+			electron.window.hide()
 			clipboardy.writeSync(action.payload);
 			// return {
 			// 	page: 'home',
@@ -45,6 +45,8 @@ async function updateStore(action, window){
 			return {
 				page: 'create',
 			}
+		case 'EXIT':
+			return electron.app.quit()
 	}
 }
 

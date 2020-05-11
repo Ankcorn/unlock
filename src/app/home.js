@@ -1,17 +1,17 @@
 import { html } from 'lit-html'
 
-const button = (name) => html`
-  <button class="flex items-center justify-between" target="jwt">
-    <p>Google @ NearST</p>
-    <svg viewBox="0 0 20 20" class="w-8 h-8 text-gray-800 fill-current"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+const ExitButton = (quitApplication) => html`
+  <button clas="p-2 m-4" @click=${quitApplication}>
+    <svg class="stroke-current text-white w-8 h-8" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
   </button>
 `
 
-const header = html`
-  <navigation class="px-6 pt-4 flex items-center flex-row w-screen">
+const header = (quitApplication) => html`
+  <navigation class="px-6 pt-4 flex items-center flex-row w-screen justify-between">
     <div class="rounded-full bg-blue-500 p-2 shadow">
       <svg fill="#4299e1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-white stroke-current"><path d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
     </div>
+    ${ExitButton(quitApplication)}
   </navigation>
 `
 
@@ -35,9 +35,9 @@ const list = (data, onJWTClick) => data.map((el, i) => html`
   </button>
 `)
 
-export default ({ onFooterClick, data, onJWTClick }) => html`
+export default ({ onFooterClick, data, onJWTClick, quitApplication }) => html`
   <div class="h-screen bg-gray-800 flex flex-col justify-between" >
-    ${header}
+    ${header(quitApplication)}
     <div class="w-screen flex flex-col items-center px-6 py-8 flex-1">
     ${data.length === 0 ? firstLaunch: html`<div class="bg-white w-full rounded-lg p-2">${list(data, onJWTClick)}</div>`}
     </div>

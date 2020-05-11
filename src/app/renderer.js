@@ -19,6 +19,10 @@ function backHome() {
   ipcRenderer.send('change', { type: 'HOME_CLICK' })
 }
 
+function quitApplication() {
+  ipcRenderer.send('change', { type: 'EXIT' })
+}
+
 function copyToken(payload)  {
   ipcRenderer.send('change', { type: 'COPY_TOKEN', payload })
   new Notification('JWT Copied', {
@@ -30,18 +34,18 @@ function build(state) {
 
   switch (state.page) {
     case 'home':
-      return render(home({ onFooterClick, data: state.homeData, onJWTClick }), document.body);
+      return render(home({ onFooterClick, data: state.homeData, onJWTClick, quitApplication }), document.body);
     case 'jwt':
       return render(jwt({ back: backHome, user: state.activeUser, token: state.activeToken.AuthenticationResult.IdToken, copyToken }), document.body);
     case 'create':
       return render(create({back: backHome}), document.body)
     default:
-      return render(home({ onFooterClick, data: state.homeData, onJWTClick }), document.body);
+      return render(home({ onFooterClick, data: state.homeData, onJWTClick, quitApplication }), document.body);
   }
 }
 
 ipcRenderer.on('update', (event, arg) => {
-  console.log(arg) // prints "pong"
+  console.log(arg)
   build(arg)
 })
 
