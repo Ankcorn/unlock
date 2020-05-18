@@ -2,7 +2,9 @@ const Store = require('electron-store');
 const getUserTokens = require('./aws')
 const clipboardy = require('clipboardy');
 const store = new Store();
-store.delete('tokens')
+
+// Uncomment line below to reset store if state gets bad
+// store.delete('tokens')
 
 async function updateStore(action, electron) {
 
