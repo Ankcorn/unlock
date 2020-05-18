@@ -29,8 +29,8 @@ const firstLaunch = html`
 `
 
 const list = (data, onJWTClick) => data.map((el, i) => html`
-  <button @click="${() => onJWTClick(el)}" class="flex w-full items-center justify-between py-2 ${i && 'border-solid border-t-2'}">
-    <p>${el}</p>
+  <button @click="${() => onJWTClick(el.name)}" class="flex w-full items-center justify-between py-2 ${i && 'border-solid border-t-2'}">
+    <p>${el.name}</p>
     <svg viewBox="0 0 20 20" class="w-8 h-8 text-gray-800 fill-current"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
   </button>
 `)
@@ -39,7 +39,7 @@ export default ({ onFooterClick, data, onJWTClick, quitApplication }) => html`
   <div class="h-screen bg-gray-800 flex flex-col justify-between" >
     ${header(quitApplication)}
     <div class="w-screen flex flex-col items-center px-6 py-8 flex-1">
-    ${data.length === 0 ? firstLaunch: html`<div class="bg-white w-full rounded-lg p-2">${list(data, onJWTClick)}</div>`}
+    ${data.length === 0 ? firstLaunch : html`<div class="bg-white w-full rounded-lg p-2">${list(data, onJWTClick)}</div>`}
     </div>
     ${footer({ onClick: onFooterClick })}
   </div>

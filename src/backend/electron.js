@@ -55,11 +55,11 @@ const createTray = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 function buildTrayApplication(callback) {
-	app.dock.hide();
-	app.on('ready', () => {
-		createTray();
-		createWindow();
-		callback({window, tray, app})
+  app.dock.hide();
+  app.on('ready', () => {
+    createTray();
+    createWindow();
+    callback({ window, tray, app })
   });
 }
 

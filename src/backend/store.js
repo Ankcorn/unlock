@@ -1,49 +1,53 @@
 const Store = require('electron-store');
 const getUserTokens = require('./aws')
-const notifier = require('node-notifier');
 const clipboardy = require('clipboardy');
+const store = new Store();
+store.delete('tokens')
 
-const parseJwt = (token) => {
-	try {
-		  // console.log(atop(token))
-		const data = token.split('.')[1]
-		const str = Buffer.from(data, 'base64').toString()
-		return JSON.parse(str)
-	} catch (e) {
-		console.log(e)
-		return null;
-	}
-};
+async function updateStore(action, electron) {
 
-async function updateStore(action, electron){
-	switch(action.type) {
+	const tokens = store.get('tokens') || [];
+
+	switch (action.type) {
 		case 'INIT':
 			return {
 				page: 'home',
-				homeData: []
+				homeData: tokens
 			}
 		case 'JWT_CLICK':
-			const user = await getUserTokens()
+			const token = store.get('tokens').find((item) => item.name === action.payload)
+
+			const result = await getUserTokens(token['app-client-id'], token['user-pool-id'], token['refresh-token'])
 			return {
 				page: 'jwt',
-				activeToken: user,
-				activeUser: parseJwt(user.AuthenticationResult.IdToken)
+				activeToken: result,
+				name: action.payload
 			}
 		case 'HOME_CLICK':
 			return {
 				page: 'home',
-				homeData: ['Google @ NearST', 'Shop-Owners', 'Testing']
+				homeData: tokens
 			}
 		case 'COPY_TOKEN':
 			electron.window.hide()
 			clipboardy.writeSync(action.payload);
-			// return {
-			// 	page: 'home',
-			// 	homeData: ['Google @ NearST', 'Shop-Owners', 'Testing']
-			// }
+			return
 		case 'CREATE_CLICK':
 			return {
 				page: 'create',
+			}
+		case 'CREATE_TOKEN':
+			store.set(`tokens`, [...tokens, action.payload])
+			return {
+				page: 'home',
+				homeData: [...tokens, action.payload]
+			}
+		case 'DELETE_TOKEN':
+			const updatedTokens = tokens.filter(el => el.name !== action.payload)
+			store.set(`tokens`, updatedTokens)
+			return {
+				page: 'home',
+				homeData: updatedTokens
 			}
 		case 'EXIT':
 			return electron.app.quit()

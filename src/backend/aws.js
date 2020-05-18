@@ -1,16 +1,24 @@
 const CognitoIdentityServiceProvider = require('aws-sdk/clients/cognitoidentityserviceprovider');
 
 
-function getUserTokens() {
+async function getUserTokens(ClientId, UserPoolId, REFRESH_TOKEN) {
+	console.log(ClientId, UserPoolId, REFRESH_TOKEN)
 	const cognito = new CognitoIdentityServiceProvider({ region: 'eu-west-1' });
-	return cognito.adminInitiateAuth({
-		AuthFlow: 'REFRESH_TOKEN_AUTH',
-		ClientId: '',
-		UserPoolId: '',
-		AuthParameters: {
-			REFRESH_TOKEN : ''
+	try {
+		return await cognito.adminInitiateAuth({
+			AuthFlow: 'REFRESH_TOKEN_AUTH',
+			ClientId,
+			UserPoolId,
+			AuthParameters: {
+				REFRESH_TOKEN
+			}
+		}).promise();
+	} catch (e) {
+		return {
+			error: e.message
 		}
-	}).promise();
+	}
+
 }
 
 module.exports = getUserTokens
