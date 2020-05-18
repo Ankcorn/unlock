@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Tray, ipcMain } = require('electron');
+const { app, BrowserWindow, Tray } = require('electron');
 const path = require('path');
 app.dock.hide();
 
