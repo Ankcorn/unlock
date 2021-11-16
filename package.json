@@ -78,7 +78,7 @@
     "tailwindcss": "^1.4.6"
   },
   "dependencies": {
-    "aws-sdk": "^2.656.0",
+    "aws-sdk": "^2.814.0",
     "clipboardy": "^2.3.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^5.1.1",
