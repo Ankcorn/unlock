@@ -12,7 +12,6 @@ function onFooterClick() {
 }
 
 function onJWTClick(name) {
-  console.log('hi')
   ipcRenderer.send('change', { type: 'JWT_CLICK', payload: name })
 }
 
@@ -62,7 +61,7 @@ function build(state) {
 }
 
 ipcRenderer.on('update', (event, arg) => {
-  console.log(arg)
+  console.log(JSON.stringify({ event: 'render', page: arg.page, error: arg.error }))
   build(arg)
 })
 
