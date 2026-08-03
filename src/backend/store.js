@@ -19,7 +19,7 @@ async function updateStore(action, electron) {
 		case 'JWT_CLICK':
 			const token = store.get('tokens').find((item) => item.name === action.payload)
 
-			const result = await getUserTokens(token['app-client-id'], token['user-pool-id'], token['refresh-token'])
+			const result = await getUserTokens(token['app-client-id'], token['user-pool-id'], token['refresh-token'], action.payload)
 			return {
 				page: 'jwt',
 				activeToken: result,
